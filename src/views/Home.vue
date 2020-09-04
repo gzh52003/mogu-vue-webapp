@@ -51,6 +51,7 @@ import {
   Divider,
   Tab,
   Tabs,
+  Image
 } from "vant";
 Vue.use(Lazyload);
 Vue.use(Swipe);
@@ -60,6 +61,7 @@ Vue.use(GridItem);
 Vue.use(Divider);
 Vue.use(Tab);
 Vue.use(Tabs);
+Vue.use(Image)
 import { getHomeData, getHomeList } from "../api/home";
 export default {
   data() {
@@ -102,6 +104,9 @@ export default {
     this.getHomeList("pop");
     this.getHomeList("new");
     this.getHomeList("sell");
+    
+
+    this.$parent.showNav = true
   },
   methods: {
     getHomeData() {
@@ -110,6 +115,7 @@ export default {
         this.recommends = res.data.recommend.list;
         this.keywords = res.data.keywords.list;
         this.dKeywords = res.data.dKeyword.list;
+        
       });
     },
 
