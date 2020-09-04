@@ -11,6 +11,10 @@
     <div v-if="!showUser">
       <span>{{username}}</span>
     </div>
+    <div class="box">
+      <van-image round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+    </div>
+    <van-cell title="地址管理" is-link to="dizhi" />
   </div>
 </template>
 
@@ -18,12 +22,16 @@
 import NavBar from "../components/NavBar";
 import cookies from "js-cookie";
 import Vue from "vue";
-import { Button } from "vant";
+import { Cell, CellGroup, Image as VanImage, Button } from "vant";
+Vue.use(VanImage);
 Vue.use(Button);
+Vue.use(Cell);
+Vue.use(CellGroup);
 export default {
+  name: "Mine",
   data() {
     return {
-      username:'',
+      username: "",
       showname: false,
       showUser: true,
     };
@@ -36,7 +44,7 @@ export default {
     this.$parent.showNav = true;
     // 获取用户名
     let showcookie = cookies.get("username");
-    this.username = showcookie
+    this.username = showcookie;
     if (showcookie) {
       this.showname = true;
       this.showUser = false;
@@ -50,4 +58,17 @@ export default {
 </script>
 
 <style>
+.box {
+  display: flex;
+  padding-left: 1rem;
+  margin-bottom: 5px;
+}
+.van-image {
+  width: 50px;
+  height: 50px;
+}
+.van-image > img {
+  width: 50px;
+  height: 50px;
+}
 </style>
