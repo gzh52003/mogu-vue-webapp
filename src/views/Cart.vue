@@ -61,7 +61,7 @@
     </div>
     <!-- 提交订单计算总价格栏 -->
     <van-submit-bar :price="totalPrice" 
-    
+    style="margin-bottom:50px"
     button-text="提交订单" @submit="onSubmit">
       <van-checkbox v-model="checkAll">全选</van-checkbox>
       <template #tip>
@@ -256,13 +256,15 @@ export default {
   created() {
     // this.$parent.showMenu = false;
     // console.log('goodslist=',this.$store.state)
-    this.$store.commit("displayTabbar", false);
+    this.$store.commit("displayTabbar", true);
+    // this.iid = this.$route.params.iid;
+    console.log(this.iid);
     this.getHomeList()
   },
   beforeDestroy() {
     // this.$parent.showMenu = true;
     //  console.log('cart.destroyed',this.$parent.showMenu)
-    this.$store.commit("displayTabbar", false);
+    this.$store.commit("displayTabbar", true);
   },
 };
 </script>

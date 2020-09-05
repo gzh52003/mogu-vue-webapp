@@ -35,10 +35,10 @@
     <!-- 加入购物车按钮 -->
     <van-goods-action class="goods_action">
       <van-goods-action-icon icon="chat-o" text="客服" dot />
-      <van-goods-action-icon icon="cart-o" text="购物车" badge @click="goto('/cart')" />
+      <van-goods-action-icon icon="cart-o" text="购物车" :badge="cartlist.length" @click="goto('/cart')" />
       <van-goods-action-icon icon="shop-o" text="店铺" badge />
-      <van-goods-action-button type="warning" text="加入购物车" />
-      <van-goods-action-button type="danger" text="立即购买" />
+      <van-goods-action-button type="warning" @click="add2cart(iid)" text="加入购物车" />
+      <van-goods-action-button type="danger" text="立即购买" @click="buyNow" />
     </van-goods-action>
   </div>
 </template>
@@ -66,7 +66,6 @@ Vue.use(GoodsAction);
 Vue.use(GoodsActionButton);
 Vue.use(GoodsActionIcon);
 Vue.use(Lazyload);
-
 export default {
   components: {
     NavBar,
@@ -88,7 +87,6 @@ export default {
   created() {
     // this.detailData();
     // console.log(this.detailData());
-
     this.iid = this.$route.params.id;
     // console.log(this.iid);
     detailData(this.iid).then((res) => {
@@ -103,6 +101,11 @@ export default {
       this.recommends = res.data.list;
       console.log(this.recommends);
     });
+  },
+  computed:{
+    cartlist(){
+      return this.$store.state.cart.goodslist;
+    }
   },
   methods: {
     // 返回前一页
@@ -128,7 +131,39 @@ export default {
     destroyed() {
       this.$store.commit("displayTabbar", true)
     },
+    add2cart(iid){
+      // 添加当前商品到购物车;
+      // 判断当前商品是否已经存在购物车中
+      // 存在：数量+1
+      // 不存在：添加到购物车
+      const {_id} = this.data;
+      const current = this.cartlist.filter(item=>item._id === _id)[0]
+      if(current){
+        this.$store.commit('changeQty',{_id,qty:current.qty+1})
+      }else{
+        const goods = {
+          ...this.data,
+          qty:1
+        }
+        // 调用mutation方法
+        this.$store.commit('add',goods);
+
+      }
+      this.goto({
+        name:'Goods',
+        params:{
+          iid
+        }
+      })
+
+    },
+    buyNow(){
+      // 添加当前商品到购物车，并跳转到购物车页面
+      this.add2cart();
+      this.$router.push('/cart')
+    },
   },
+  
 };
 </script>
 
@@ -142,7 +177,6 @@ export default {
     left: 0;
   }
 }
-
 .img {
   img {
     width: 100%;
@@ -175,4 +209,3 @@ export default {
   z-index: 333;
 }
 </style>
-
