@@ -30,7 +30,16 @@ const routes = [
     name: 'Mine',
     component: () => import('../views/Mine.vue')
   },
-  
+  {
+    path: '/address',
+    name: 'address',
+    component: () => import('../views/address.vue')
+  },
+  {
+    path: '/addressEdit',
+    name: 'addressEdit',
+    component: () => import('../views/addressEdit.vue')
+  },
   {
     path: '/reg',
     name: 'Reg',
