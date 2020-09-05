@@ -8,11 +8,12 @@
       <van-button plain type="primary" to="Reg">注册</van-button>
       <van-button plain type="info" to="Login">登陆</van-button>
     </div>
-    <div v-if="!showUser">
-      <span>{{username}}</span>
-    </div>
+    
     <div class="box">
       <van-image round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <div v-if="!showUser" class="notetxt">
+      <span>{{username}}</span>
+      </div>
     </div>
     <van-cell title="地址管理" is-link to="dizhi" />
   </div>
@@ -62,6 +63,7 @@ export default {
   display: flex;
   padding-left: 1rem;
   margin-bottom: 5px;
+  position: relative;
 }
 .van-image {
   width: 50px;
@@ -70,5 +72,12 @@ export default {
 .van-image > img {
   width: 50px;
   height: 50px;
+}
+.notetxt{
+  position: absolute;
+  align-items: center;
+  left: 30%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 </style>
