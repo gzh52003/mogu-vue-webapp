@@ -131,8 +131,7 @@ export default {
         this.title = res.data.filter.list;
         this.goodsList = this.goods[type].list;
         console.log(this.goods[type].list);
-        // this.pop = this.goods[this.currentPop].list
-        // this.new = this.goods[this.currentNew].list
+        
       });
     },
     gotogoods(id) {
