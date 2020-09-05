@@ -1,41 +1,178 @@
 <template>
   <div class="goods">
-    <NavBar>
-      <span slot="left" class="van-nav-bar__text">返回</span>
+    <NavBar class="navBar">
+      <span slot="left" class="van-nav-bar__text" @click="goback">返回</span>
       <div slot="title">goods</div>
       <van-icon name="search" slot="right" size="18" />
     </NavBar>
-    <!-- 商品展示
-    <van-grid :border="true" :column-num="2">
-      <van-grid-item v-for="item in img" :key="item" class="goodslist">
-        <van-image :src="item.url" />
-        <h4>{{item.title}}</h4>
-        <p>{{item.price}}</p>
+    <!-- 轮播图 -->
+    <van-swipe :autoplay="3000" height="400">
+      <van-swipe-item v-for="(item, index) in banners" :key="index" class="img">
+        <img v-lazy="item" />
+      </van-swipe-item>
+    </van-swipe>
+
+    <div class="goods-info">
+      <h1>{{title}}</h1>
+      <p class="price">
+        <del>¥{{delprice}}</del>
+        <span>{{price}}</span>
+      </p>
+    </div>
+    <img v-for="img in imageList" :key="img" v-lazy="img" class="shopImg" />
+    <!-- 推荐 -->
+    <h4 class="tj_title">推荐商品</h4>
+    <van-grid :border="true" :column-num="2" :gutter="10">
+      <van-grid-item v-for="(itm,index) in recommends" :key="index" @click="gotogoods(itm.iid)">
+        <van-image :src="itm.show.img" />
+        <h4>{{itm.title}}</h4>
+        <p>
+          <del>¥{{itm.orgPrice}}</del>
+          <span>¥{{itm.price}}</span>
+        </p>
       </van-grid-item>
-    </van-grid> -->
+    </van-grid>
+    <!-- 加入购物车按钮 -->
+    <van-goods-action class="goods_action">
+      <van-goods-action-icon icon="chat-o" text="客服" dot />
+      <van-goods-action-icon icon="cart-o" text="购物车" badge @click="goto('/cart')" />
+      <van-goods-action-icon icon="shop-o" text="店铺" badge />
+      <van-goods-action-button type="warning" text="加入购物车" />
+      <van-goods-action-button type="danger" text="立即购买" />
+    </van-goods-action>
   </div>
 </template>
 
 <script>
-// import Vue from "vue";
-// import { Icon, Grid, GridItem,Image} from "vant";
+import Vue from "vue";
+import {
+  Icon,
+  Grid,
+  GridItem,
+  Image,
+  GoodsAction,
+  GoodsActionIcon,
+  GoodsActionButton,
+  Lazyload,
+} from "vant";
 import NavBar from "../components/NavBar";
-// Vue.use(Icon);
-// Vue.use(Grid);
-// Vue.use(GridItem);
-// Vue.use(Image)
+import { detailData} from "../api/detail";
+import { getHomeData, getHomeList } from "../api/home";
+Vue.use(Icon);
+Vue.use(Grid);
+Vue.use(GridItem);
+Vue.use(Image);
+Vue.use(GoodsAction);
+Vue.use(GoodsActionButton);
+Vue.use(GoodsActionIcon);
+Vue.use(Lazyload);
 
 export default {
   components: {
-    NavBar
+    NavBar,
   },
+  name: "Goods",
+  data() {
+    return {
+      data: {},
+      recommends: [],
+      banners: [],
+      title: [],
+      price: [],
+      delprice: [],
+      imageList: [],
+      iid: "",
+    };
+  },
+  watch: {},
   created() {
-    this.$parent.showNav = true
+    // this.detailData();
+    // console.log(this.detailData());
+
+    this.iid = this.$route.params.id;
+    // console.log(this.iid);
+    detailData(this.iid).then((res) => {
+      this.banners = res.result.itemInfo.topImages;
+      this.title = res.result.itemInfo.title;
+      this.price = res.result.itemInfo.price;
+      this.delprice = res.result.itemInfo.highPrice;
+      this.imageList = res.result.detailInfo.detailImage[0].list;
+      console.log(res);
+    });
+    getHomeList("pop",1).then((res) => {
+      this.recommends = res.data.list;
+      console.log(this.recommends);
+    });
+  },
+  methods: {
+    // 返回前一页
+    goback() {
+      this.$router.go(-1);
+    },
+    goto(path) {
+      this.$router.push(path);
+    },
+    gotogoods(id) {
+      // this.$router.push('/goods/'+id)
+      this.goto({
+        name: "Goods",
+        params: {
+          id,
+        },
+      });
+    },
+    mounted() {
+      // 控制菜单显示
+      this.$store.commit("displayTabbar", false);
+    },
+    destroyed() {
+      this.$store.commit("displayTabbar", true)
+    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.goods {
+  position: relative;
+  .navBar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
 
+.img {
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.goods-info {
+  h1 {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+  .price {
+    span {
+      font-size: 18px;
+      font-weight: bold;
+      color: red;
+    }
+    del {
+      color: #999;
+      padding: 0 10px;
+    }
+  }
+}
+.shopImg {
+  display: block;
+  width: 100%;
+  height: 50%;
+}
+.goods_action {
+  z-index: 333;
+}
 </style>
 
