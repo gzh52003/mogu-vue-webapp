@@ -30,15 +30,11 @@ const routes = [
     name: 'Mine',
     component: () => import('../views/Mine.vue')
   },
+  
   {
-    path: '/dizhi',
-    name: 'Dizhi',
-    component: () => import('../views/Dizhi.vue')
-  },
-  {
-    path: '/xiugai',
-    name: 'Xiugai',
-    component: () => import('../views/Xiugai.vue')
+    path: '/reg',
+    name: 'Reg',
+    component: () => import('../views/Reg.vue')
   },
   {
     path: '/reg',
@@ -46,9 +42,9 @@ const routes = [
     component: () => import('../views/Reg.vue')
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login.vue')
+    path: '/classify',
+    name: 'Classify',
+    component: () => import('../views/Classify.vue')
   },
 ]
 
