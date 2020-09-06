@@ -112,7 +112,7 @@ const cart = {
             // 发起ajax请求，获取当前商品的库存数量
             // 库存>=qty：允许修改购物车商品数量
             // 库存<qty：不允许增加购物车商品数量
-            const {data} = await request.get(`/goods/${_id}/kucun`)
+            const {data} = await request.get(`/goods/${_iid}/kucun`)
             const kucun = data.data;
             console.log('kucun=',kucun)
 

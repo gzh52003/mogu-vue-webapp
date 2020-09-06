@@ -73,12 +73,12 @@
     <!-- 郭斌斌接口数据推荐商品 -->
     <h4>推荐商品</h4>
     <van-grid :border="false" :column-num="2" class="recommendlist">
-      <van-grid-item v-for="item in recommend" :key="item._id" @click="gotoDea(item.iid)">
+      <van-grid-item v-for="item in recommend" :key="item.iid" @click="gotoDea(item.iid)">
         <van-image :src="item.show.img" />
         <h4>{{item.title}}</h4>
         <p class="price">
-          <del>{{item.price}}</del>
-          <span>{{item.discountPrice}}</span>
+          <del>{{item.orgPrice}}</del>
+          <span>¥{{item.price}}</span>
         </p>
       </van-grid-item>
     </van-grid>
@@ -186,8 +186,9 @@ export default {
   methods: {
     getHomeList() {
       getHomeList("sell",1).then(res=>{
-      console.log(this.recommend);
+      
        this.recommend=res.data.list
+       console.log(this.recommend);
       })
     },
 

@@ -17,8 +17,14 @@
       <p class="price">
         <del>¥{{delprice}}</del>
         <span>{{price}}</span>
+        <i>{{columns[0]}}</i>
+        <b>{{columns[1]}}</b>
       </p>
     </div>
+    <!-- <van-cell is-link @click="showPopup" class="upshow">参数 厂名 尺码 衣长...</van-cell>
+    <van-popup v-model="show" position="bottom" :style="{ height: '60%' }">
+      
+    </van-popup> -->
     <img v-for="img in imageList" :key="img" v-lazy="img" class="shopImg" />
     <!-- 推荐 -->
     <h4 class="tj_title">推荐商品</h4>
@@ -26,9 +32,9 @@
       <van-grid-item v-for="(itm,index) in recommends" :key="index" @click="gotogoods(itm.iid)">
         <van-image :src="itm.show.img" />
         <h4>{{itm.title}}</h4>
-        <p>
-          <del>¥{{itm.orgPrice}}</del>
-          <span>¥{{itm.price}}</span>
+        <p class="price">
+          <del>{{itm.orgPrice}}</del>
+          <span>{{itm.price}}</span>
         </p>
       </van-grid-item>
     </van-grid>
@@ -54,6 +60,7 @@ import {
   GoodsActionIcon,
   GoodsActionButton,
   Lazyload,
+  Popup
 } from "vant";
 import NavBar from "../components/NavBar";
 import { detailData} from "../api/detail";
@@ -66,10 +73,12 @@ Vue.use(GoodsAction);
 Vue.use(GoodsActionButton);
 Vue.use(GoodsActionIcon);
 Vue.use(Lazyload);
+Vue.use(Popup);
 export default {
   components: {
     NavBar,
   },
+  
   name: "Goods",
   data() {
     return {
@@ -80,7 +89,9 @@ export default {
       price: [],
       delprice: [],
       imageList: [],
+      columns:[],
       iid: "",
+      // show: false,
     };
   },
   watch: {},
@@ -95,6 +106,7 @@ export default {
       this.price = res.result.itemInfo.price;
       this.delprice = res.result.itemInfo.highPrice;
       this.imageList = res.result.detailInfo.detailImage[0].list;
+      this.columns = res.result.columns
       console.log(res);
     });
     getHomeList("pop",1).then((res) => {
@@ -124,6 +136,9 @@ export default {
         },
       });
     },
+    // showPopup() {
+    //   this.show = true;
+    // },
     mounted() {
       // 控制菜单显示
       this.$store.commit("displayTabbar", false);
@@ -175,6 +190,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 334;
   }
 }
 .img {
@@ -193,10 +209,20 @@ export default {
       font-size: 18px;
       font-weight: bold;
       color: red;
+      padding-right: 25px;
     }
     del {
       color: #999;
       padding: 0 10px;
+    }
+    i{
+      font-style: normal;
+      font-size: 14px;
+      padding-right: 15px;
+    }
+    b{
+      font-weight: 400;
+      font-size: 12px;
     }
   }
 }

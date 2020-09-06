@@ -64,15 +64,9 @@ export default {
   del {
     color: #999;
     margin-right: 5px;
-    &::before {
-      content: "￥";
-    }
   }
   span {
     color: #f00;
-    &::before {
-      content: "￥";
-    }
   }
 }
 </style>

@@ -36,6 +36,7 @@
               <del>{{itm.orgPrice}}</del>
               <span>¥{{itm.price}}</span>
             </p>
+            <p class="sale">月销 {{itm.sale}}件</p>
           </van-grid-item>
         </van-grid>
       </van-tab>
@@ -110,6 +111,7 @@ export default {
     this.getHomeList("pop");
     this.getHomeList("new");
     this.getHomeList("sell");
+    console.log(this.active)
   },
   methods: {
     getHomeData() {
@@ -159,15 +161,22 @@ export default {
   font-size: 20px;
 }
 .goodslist {
+  
   h4 {
     font-size: 14px;
   }
 }
 .price {
   color: red;
+  margin: 0 0 5px;
   del {
     padding-right: 5px;
     color: #999;
   }
+}
+.sale{
+  margin: 0;
+  font-size: 12px;
+  color: #999;
 }
 </style>
