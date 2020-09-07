@@ -67,6 +67,9 @@ export default {
 
 <style>
 .van-address-list__bottom {
-  margin-bottom: 70px;
+  margin-bottom: 3.1rem;
+}
+.van-address-list {
+  margin-bottom: 2.5rem;
 }
 </style>
