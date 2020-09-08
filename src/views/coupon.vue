@@ -10,11 +10,9 @@
 
 <script>
 import Vue from "vue";
-import { AddressList, Toast, PullRefresh, Tab, Tabs, CouponList } from "vant";
+import { AddressList, Toast, PullRefresh, CouponList } from "vant";
 Vue.use(AddressList);
 Vue.use(PullRefresh);
-Vue.use(Tab);
-Vue.use(Tabs);
 Vue.use(CouponList);
 
 const coupon = {
@@ -34,7 +32,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      activeName: "a",
       chosenCoupon: -1,
       coupons: [coupon],
       disabledCoupons: [coupon],
