@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <NavBar>
-      <span slot="left" class="van-nav-bar__text">返回</span>
       <div slot="title">购物街</div>
       <van-icon name="search" slot="right" size="18" />
     </NavBar>

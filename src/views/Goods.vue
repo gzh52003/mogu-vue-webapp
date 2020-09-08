@@ -2,8 +2,8 @@
   <div class="goods">
     <NavBar class="navBar">
       <span slot="left" class="van-nav-bar__text" @click="goback">返回</span>
-      <div slot="title">goods</div>
-      <van-icon name="search" slot="right" size="18" />
+      <div slot="title">shops</div>
+      
     </NavBar>
     <!-- 轮播图 -->
     <van-swipe :autoplay="3000" height="400">
@@ -152,19 +152,20 @@ export default {
     destroyed() {
       this.$store.commit("displayTabbar", true)
     },
-    add2cart(iid){
+    add2cart(){
       // 添加当前商品到购物车;
       // 判断当前商品是否已经存在购物车中
       // 存在：数量+1
       // 不存在：添加到购物车
-      const {_id} = this.data;
-      const current = this.cartlist.filter(item=>item._id === _id)[0]
+      const {iid} = this.data;
+      console.log(this.data);
+      const current = this.cartlist.filter(item=>item.iid === iid)[0]
       if(current){
-        this.$store.commit('changeQty',{_id,qty:current.qty+1})
+        this.$store.commit('changeQty',{iid,cartNum:current.cartNum+1})
       }else{
         const goods = {
           ...this.data,
-          qty:1
+          cartNum:1
         }
         // 调用mutation方法
         this.$store.commit('add',goods);

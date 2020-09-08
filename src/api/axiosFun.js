@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default function request(config) {
   const instance = axios.create({
-    baseURL: 'http://liufengmao.cn:8000/api/private/v1/',
+    baseURL: 'http://123.207.32.32:8000/api/h8',
     timeout: 5000
   })
     

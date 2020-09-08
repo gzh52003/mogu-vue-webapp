@@ -28,9 +28,9 @@
       :title="item.goods_name"
       :thumb="item.img_url"
       v-for="item in goodslist"
-      :key="item._id"
+      :key="item.iid"
       class="pic"
-      @click-thumb.stop="gotoDetail(item._id,$event)"
+      @click-thumb.stop="gotoDetail(item.iid,$event)"
     >
       <template #tag>
         <van-checkbox v-model="item.checked"></van-checkbox>
@@ -40,18 +40,18 @@
           <del>{{item.price}}</del>
           <span>{{item.sales_price}}</span>
           <van-stepper
-            :value="item.qty"
+            :value="item.cartNum"
             input-width="20px"
             button-size="20px"
             theme="round"
             async-change
             integer
-            @change="changeQty(item._id,$event)"
+            @change="changecartNum(item.iid,$event)"
           />
         </p>
       </template>
       <template #footer>
-        <van-button plain size="mini" type="danger" icon="cross" @click.stop="removeItem(item._id)"></van-button>
+        <van-button plain size="mini" type="danger" icon="cross" @click.stop="removeItem(item.iid)"></van-button>
       </template>
     </van-card>
 
@@ -60,9 +60,12 @@
       <van-button plain type="danger" size="small" @click="clearCart">清空购物车</van-button>
     </div>
     <!-- 提交订单计算总价格栏 -->
-    <van-submit-bar :price="totalPrice" 
-    style="margin-bottom:50px"
-    button-text="提交订单" @submit="onSubmit">
+    <van-submit-bar
+      :price="totalPrice"
+      style="margin-bottom:50px"
+      button-text="提交订单"
+      @submit="onSubmit"
+    >
       <van-checkbox v-model="checkAll">全选</van-checkbox>
       <template #tip>
         你的收货地址不支持同城送,
@@ -96,7 +99,7 @@ import {
   AddressList,
   Cell,
 } from "vant";
-import { mapState, mapMutations, mapActions} from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import { getHomeList } from "../api/home";
 Vue.use(Card);
 Vue.use(Step);
@@ -161,6 +164,7 @@ export default {
       // 映射模块化后的数据
       goodslist(state) {
         console.log("mapState=", state);
+        console.log(state.goodslist);
         return state.cart.goodslist;
       },
     }),
@@ -176,7 +180,7 @@ export default {
       },
     },
     totalPrice() {
-      // return this.goodslist.reduce((pre,item)=>pre+item.sales_price*item.qty,0)*100;
+      // return this.goodslist.reduce((pre,item)=>pre+item.sales_price*item.cartNum,0)*100;
       return this.$store.getters.totalPrice;
 
       // 添加命名空间的获取方式
@@ -185,11 +189,10 @@ export default {
   },
   methods: {
     getHomeList() {
-      getHomeList("sell",1).then(res=>{
-      
-       this.recommend=res.data.list
-       console.log(this.recommend);
-      })
+      getHomeList("sell", 1).then((res) => {
+        this.recommend = res.data.list;
+        console.log(this.recommend);
+      });
     },
 
     goto(path) {
@@ -242,15 +245,15 @@ export default {
       removeItem: "remove",
       clearCart: "clear",
     }),
-    // changeQty(id,qty){
-    //   // this.$store.commit('changeQty',{_id:id,qty})
-    //   this.$store.dispatch('changeQtyAsync',{_id:id,qty})
+    // changecartNum(id,cartNum){
+    //   // this.$store.commit('changecartNum',{iid:id,cartNum})
+    //   this.$store.dispatch('changecartNumAsync',{iid:id,cartNum})
     // }
 
     ...mapActions({
-      // changeQty:'changeQtyAsync'
-      changeQty(dispatch, id, qty) {
-        dispatch("changeQtyAsync", { id, qty });
+      // changecartNum:'changecartNumAsync'
+      changecartNum(dispatch, iid, cartNum) {
+        dispatch("changecartNumAsync", { iid, cartNum });
       },
     }),
   },
@@ -260,7 +263,7 @@ export default {
     this.$store.commit("displayTabbar", true);
     // this.iid = this.$route.params.iid;
     console.log(this.iid);
-    this.getHomeList()
+    this.getHomeList();
   },
   beforeDestroy() {
     // this.$parent.showMenu = true;
