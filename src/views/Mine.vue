@@ -20,7 +20,10 @@
     </div>
     <div class="user-order">
       <h3 class="order__title">
-        <p class="order__title__title">我的订单</p>
+        <p class="order__title__navigate">
+          <span>余额：</span>
+          <i class="mon">0.00</i>
+        </p>
         <p class="order__title__navigate">
           <span>全部订单</span>
         </p>
@@ -35,7 +38,7 @@
     <div class="user-tools">
       <van-cell title="地址管理" is-link to="address" />
       <van-cell title="我的优惠券" is-link to="coupon" />
-      <van-cell title="充值缴费" is-link />
+      <van-cell title="余额充值" is-link />
       <van-cell title="设置" is-link />
     </div>
   </div>
@@ -45,11 +48,12 @@
 import NavBar from "../components/NavBar";
 import cookies from "js-cookie";
 import Vue from "vue";
-import { Cell, CellGroup, Image as VanImage, Button } from "vant";
+import { Cell, CellGroup, Image as VanImage, Button, Icon } from "vant";
 Vue.use(VanImage);
 Vue.use(Button);
 Vue.use(Cell);
 Vue.use(CellGroup);
+Vue.use(Icon);
 export default {
   name: "Mine",
   data() {
@@ -158,6 +162,8 @@ export default {
   border: 0.1rem solid red;
   padding: 1rem;
   border-radius: 50px;
+  display: flex;
+  align-items: center;
 }
 .order__bd {
   display: flex;
@@ -187,5 +193,9 @@ export default {
 }
 .van-cell {
   margin: 1rem 0;
+}
+.order__title__navigate > span {
+  display: flex;
+  align-items: center;
 }
 </style>
