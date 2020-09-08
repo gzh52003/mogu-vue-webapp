@@ -8,7 +8,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import {Button,Tabbar, TabbarItem,Tag, Image, ImagePreview, Field, Checkbox } from 'vant'
+import {Button,Tabbar, TabbarItem,Tag, Image, Field, Checkbox } from 'vant'
 Vue.use(Image);
 Vue.use(Button)
 Vue.use(Tabbar);

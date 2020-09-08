@@ -27,7 +27,11 @@
     </van-popup> -->
     <img v-for="img in imageList" :key="img" v-lazy="img" class="shopImg" />
     <!-- 推荐 -->
-    <h4 class="tj_title">推荐商品</h4>
+    <!-- <h4 class="tj_title">推荐商品</h4> -->
+    <van-divider
+      :style="{ padding: '0 20px',}"
+      class="text"
+    >推荐商品</van-divider>
     <van-grid :border="true" :column-num="2" :gutter="10">
       <van-grid-item v-for="(itm,index) in recommends" :key="index" @click="gotogoods(itm.iid)">
         <van-image :src="itm.show.img" />
@@ -60,11 +64,12 @@ import {
   GoodsActionIcon,
   GoodsActionButton,
   Lazyload,
-  Popup
+  Popup,
+  Divider
 } from "vant";
 import NavBar from "../components/NavBar";
 import { detailData} from "../api/detail";
-import { getHomeData, getHomeList } from "../api/home";
+import { getHomeList } from "../api/home";
 Vue.use(Icon);
 Vue.use(Grid);
 Vue.use(GridItem);
@@ -74,6 +79,7 @@ Vue.use(GoodsActionButton);
 Vue.use(GoodsActionIcon);
 Vue.use(Lazyload);
 Vue.use(Popup);
+Vue.use(Divider);
 export default {
   components: {
     NavBar,

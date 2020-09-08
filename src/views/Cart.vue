@@ -96,7 +96,7 @@ import {
   AddressList,
   Cell,
 } from "vant";
-import { mapState, mapMutations, mapActions, Toast } from "vuex";
+import { mapState, mapMutations, mapActions} from "vuex";
 import { getHomeList } from "../api/home";
 Vue.use(Card);
 Vue.use(Step);
@@ -249,8 +249,8 @@ export default {
 
     ...mapActions({
       // changeQty:'changeQtyAsync'
-      changeQty(dispatch, _id, qty) {
-        dispatch("changeQtyAsync", { _id, qty });
+      changeQty(dispatch, id, qty) {
+        dispatch("changeQtyAsync", { id, qty });
       },
     }),
   },
