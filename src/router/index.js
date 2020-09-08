@@ -41,14 +41,19 @@ const routes = [
     component: () => import('../views/addressEdit.vue')
   },
   {
-    path: '/reg',
-    name: 'Reg',
-    component: () => import('../views/Reg.vue')
+    path: '/coupon',
+    name: 'coupon',
+    component: () => import('../views/coupon.vue')
   },
   {
     path: '/reg',
     name: 'Reg',
     component: () => import('../views/Reg.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/classify',

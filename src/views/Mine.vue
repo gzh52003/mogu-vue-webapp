@@ -6,7 +6,9 @@
     <!-- 登陆注册按钮 -->
 
     <div class="box">
-      <van-image round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <div class="imgbox">
+        <van-image round src="https://img.yzcdn.cn/vant/cat.jpeg" v-if="!showUser" />
+      </div>
       <div v-if="!showUser" class="notetxt">
         <span>{{username}}</span>
       </div>
@@ -14,7 +16,7 @@
         <van-button type="primary" to="Reg">注册</van-button>
         <van-button type="info" to="Login">登陆</van-button>
       </div>
-      <van-button type="danger" @click="out()">退出</van-button>
+      <van-button v-if="!showUser" type="danger" @click="out()">退出</van-button>
     </div>
     <div class="user-order">
       <h3 class="order__title">
@@ -32,7 +34,7 @@
     </div>
     <div class="user-tools">
       <van-cell title="地址管理" is-link to="address" />
-      <van-cell title="活动优惠" is-link />
+      <van-cell title="我的优惠券" is-link to="coupon" />
       <van-cell title="充值缴费" is-link />
       <van-cell title="设置" is-link />
     </div>
@@ -59,7 +61,7 @@ export default {
         {
           icon: "pending-payment",
           name: "待支付",
-          count: 3,
+          count: "",
         },
         {
           icon: "peer-pay",
@@ -99,17 +101,11 @@ export default {
 
   methods: {
     out() {
-      this.$parent.showNav = false;
-      // 获取用户名
-      let showcookie = cookies.get("username");
-      this.username = showcookie;
-      if (showcookie) {
-        this.showname = false;
-        this.showUser = true;
-      } else {
-        this.showname = true;
-        this.showUser = false;
-      }
+      cookies.remove("username");
+      cookies.remove("password");
+      setTimeout(() => {
+        location.reload(); // 强制刷新
+      }, 10);
     },
   },
 };
@@ -127,6 +123,12 @@ export default {
   padding-top: 1rem;
   padding-right: 1rem;
   margin-bottom: 0;
+}
+.imgbox {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background: #fff;
 }
 .van-image {
   width: 50px;
@@ -162,6 +164,7 @@ export default {
   justify-content: space-around;
   background: orangered;
   padding-bottom: 1rem;
+  padding-top: 1rem;
 }
 .order__bd__item {
   width: 3rem;
