@@ -12,7 +12,7 @@
           <h4>{{item.title}}</h4>
           <p class="price">
             <del>{{item.orgPrice}}</del>
-            <span>{{item.price}}</span>
+            <span>¥{{item.price}}</span>
           </p>
         </van-grid-item>
       </van-grid>
@@ -74,12 +74,6 @@ export default {
         { text: "包包" },
         { text: "运动" },
         { text: "配饰" },
-        { text: "美妆" },
-        { text: "个护" },
-        { text: "家居" },
-        { text: "百货" },
-        { text: "母婴" },
-        { text: "电脑" },
         { text: "零食" },
       ],
     };
