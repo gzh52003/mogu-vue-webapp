@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="标题" left-text="返回" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="地址" left-text="返回" left-arrow @click-left="onClickLeft" />
     <van-address-list
       v-model="chosenAddressId"
       :list="list"
