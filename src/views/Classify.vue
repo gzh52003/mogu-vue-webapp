@@ -6,8 +6,8 @@
     :main-active-index.sync="active"
   >
     <template #content>
-      <van-grid v-if="active === 0" :border="false" :column-num="1" >
-        <van-grid-item  v-for="item in recommendone" :key="item._id" @click="gotoDea(item.iid)">
+      <van-grid v-if="active === 0" :border="false" :column-num="1">
+        <van-grid-item v-for="item in recommendone" :key="item._id" @click="gotoDea(item.iid)">
           <van-image :src="item.show.img" />
           <h4>{{item.title}}</h4>
           <p class="price">
@@ -16,7 +16,7 @@
           </p>
         </van-grid-item>
       </van-grid>
-      <van-grid v-if="active === 1" :border="false" :column-num="2" >
+      <van-grid v-if="active === 1" :border="false" :column-num="2">
         <van-grid-item v-for="item in recommendtwo" :key="item._id" @click="gotoDea(item.iid)">
           <van-image :src="item.image" />
           <h4>{{item.title}}</h4>
@@ -85,13 +85,12 @@ export default {
         console.log(this.recommend);
       });
     },
-    recommend(){
-        recommend().then(res=>{
-    //   console.log(this.recommend);
-       this.recommendtwo=res.data.list
-      })
-    }
-    
+    recommend() {
+      recommend().then((res) => {
+        //   console.log(this.recommend);
+        this.recommendtwo = res.data.list;
+      });
+    },
   },
   goto(path) {
     this.$router.push(path);
@@ -118,4 +117,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.van-sidebar,
+.van-grid,
+.van-sidebar-item {
+  background: pink;
+}
 </style>

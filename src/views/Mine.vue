@@ -30,8 +30,8 @@
       </h3>
       <div class="order__bd">
         <div v-for="(item,idx) in orderList" :key="idx" class="order__bd__item">
-          <van-icon :name="item.icon" size="25" color="#dab309" :badge="item.count" />
-          <span class="name">{{ item.name }}</span>
+          <van-icon :name="item.icon" size="25" color="rgb(221, 221, 221)" :badge="item.count" />
+          <span class="name" color="rgb(148, 142, 142)">{{ item.name }}</span>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ export default {
   padding-left: 1rem;
   margin-bottom: 5px;
   position: relative;
-  background: orangered;
+  background: pink;
   padding-bottom: 1rem;
   padding-top: 1rem;
   padding-right: 1rem;
@@ -133,6 +133,7 @@ export default {
   height: 50px;
   border-radius: 100%;
   background: #fff;
+  margin-right: 20px;
 }
 .van-image {
   width: 50px;
@@ -148,18 +149,22 @@ export default {
   left: 30%;
   top: 50%;
   transform: translate(-50%, -50%);
+  min-width: 2rem;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 .order__title {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: orangered;
+  background: pink;
   margin: 0;
   padding: 1rem;
 }
 .order__title__title,
 .order__title__navigate {
-  border: 0.1rem solid red;
+  border: 0.1rem solid rgb(250, 203, 211);
   padding: 1rem;
   border-radius: 50px;
   display: flex;
@@ -168,7 +173,7 @@ export default {
 .order__bd {
   display: flex;
   justify-content: space-around;
-  background: orangered;
+  background: pink;
   padding-bottom: 1rem;
   padding-top: 1rem;
 }
@@ -179,7 +184,7 @@ export default {
   flex-direction: column;
   align-items: center;
   border-radius: 100%;
-  background: yellow;
+  background: rgb(6, 247, 203);
   padding: 0.5rem;
 }
 .name {
@@ -193,6 +198,7 @@ export default {
 }
 .van-cell {
   margin: 1rem 0;
+  background: pink;
 }
 .order__title__navigate > span {
   display: flex;

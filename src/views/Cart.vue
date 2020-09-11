@@ -3,7 +3,7 @@
     <div>
       <h2>购物车</h2>
       <div class="location">
-        <van-cell is-link @click="showPopup">永宁大街15号菜鸟驿站</van-cell>
+        <van-cell class="ddb" is-link @click="showPopup">永宁大街15号菜鸟驿站</van-cell>
         <!-- <van-popup v-model="show">内容</van-popup> -->
         <van-popup
           v-model="show"
@@ -56,8 +56,8 @@
     </van-card>
 
     <!-- 清空购物车 -->
-    <div style="padding:10px">
-      <van-button plain type="danger" size="small" @click="clearCart">清空购物车</van-button>
+    <div style="padding:10px;">
+      <van-button color="rgb(247, 161, 175)" type="danger" size="small" @click="clearCart">清空购物车</van-button>
     </div>
     <!-- 提交订单计算总价格栏 -->
     <van-submit-bar
@@ -288,5 +288,8 @@ h2 {
   .van-cell {
     text-align: center;
   }
+}
+.ddb {
+  background: rgb(6, 247, 203);
 }
 </style>
