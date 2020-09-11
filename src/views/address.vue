@@ -4,22 +4,20 @@
     <van-address-list
       v-model="chosenAddressId"
       :list="list"
-      :disabled-list="disabledList"
-      default-tag-text="默认"
       for="item in list"
       @add="onAdd"
-      @edit="onEdit(item.id)"
+      @edit="onEdit"
     />
   </div>
 </template>
 
 <script>
 import Vue from "vue";
-import { AddressList } from "vant";
+import { AddressList, Toast } from "vant";
 
 Vue.use(AddressList);
 export default {
-  name: "Dizhi",
+  name: "address",
   data() {
     return {
       chosenAddressId: "1",
@@ -40,15 +38,23 @@ export default {
       ],
     };
   },
-
+  created() {
+    this.list = JSON.parse(localStorage.getItem("address"));
+  },
   methods: {
     onAdd() {
       this.$router.push({
-        name: "Xiugai",
+        name: "addressEdit",
       });
     },
-    onEdit(index) {
-      this.$router.push("/xiugai" + index);
+    onEdit(item, index) {
+      console.log(index);
+      console.log(item);
+      Toast("编辑地址:" + index);
+      this.$router.push({
+        name: "addressEdit",
+        params: { index },
+      });
     },
     onClickLeft() {
       this.$router.push({
@@ -61,6 +67,9 @@ export default {
 
 <style>
 .van-address-list__bottom {
-  margin-bottom: 70px;
+  margin-bottom: 3.1rem;
+}
+.van-address-list {
+  margin-bottom: 2.5rem;
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <NavBar>
-      <span slot="left" class="van-nav-bar__text">返回</span>
       <div slot="title">购物街</div>
       <van-icon name="search" slot="right" size="18" />
     </NavBar>
@@ -26,11 +25,17 @@
       class="text"
     >新势力</van-divider>
 
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" class="goodslist">
       <van-tab v-for="item in title" :key="item.title" :title="item.title">
-        <van-grid :border="false" :column-num="2">
-          <van-grid-item v-for="itm in showGoods" :key="itm.title">
-            <van-image src="itm.show.img" />
+        <van-grid :border="true" :column-num="2" :gutter="10">
+          <van-grid-item v-for="(itm,index) in goodsList" :key="index" @click="gotogoods(itm.iid)">
+            <van-image :src="itm.show.img" />
+            <h4>{{itm.title}}</h4>
+            <p class="price">
+              <del>{{itm.orgPrice}}</del>
+              <span>¥{{itm.price}}</span>
+            </p>
+            <p class="sale">月销 {{itm.sale}}件</p>
           </van-grid-item>
         </van-grid>
       </van-tab>
@@ -51,8 +56,9 @@ import {
   Divider,
   Tab,
   Tabs,
-  Image
+  Image as VanImage,
 } from "vant";
+Vue.use(VanImage);
 Vue.use(Lazyload);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
@@ -61,7 +67,6 @@ Vue.use(GridItem);
 Vue.use(Divider);
 Vue.use(Tab);
 Vue.use(Tabs);
-Vue.use(Image)
 import { getHomeData, getHomeList } from "../api/home";
 export default {
   data() {
@@ -70,9 +75,10 @@ export default {
       recommends: [],
       keywords: [],
       dKeywords: [],
-      pop:[],
-      new:[],
-      sell:[],
+      goodsList: [],
+      pop: [],
+      new: [],
+      sell: [],
       goods: {
         // 默认请求第一页
         pop: { page: 0, list: [] },
@@ -104,18 +110,17 @@ export default {
     this.getHomeList("pop");
     this.getHomeList("new");
     this.getHomeList("sell");
-    
-
-    this.$parent.showNav = true
+    // console.log(this.active)
   },
   methods: {
     getHomeData() {
       getHomeData().then((res) => {
         this.banners = res.data.banner.list;
+
         this.recommends = res.data.recommend.list;
+        console.log(this.recommends);
         this.keywords = res.data.keywords.list;
         this.dKeywords = res.data.dKeyword.list;
-        
       });
     },
 
@@ -125,17 +130,25 @@ export default {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page = page;
         this.title = res.data.filter.list;
-        // console.log(this.goods);
-        // this.pop = this.goods[this.currentPop].list
-        // this.new = this.goods[this.currentNew].list
+        this.goodsList = this.goods[type].list;
+        console.log(this.goods[type].list);
         
+      });
+    },
+    gotogoods(id) {
+      // this.$router.push('/goods/'+id)
+      this.$router.push({
+        name: "Goods",
+        params: {
+          id,
+        },
       });
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .img img {
   width: 100%;
   height: 100%;
@@ -145,5 +158,24 @@ export default {
 }
 .text {
   font-size: 20px;
+}
+.goodslist {
+  
+  h4 {
+    font-size: 14px;
+  }
+}
+.price {
+  color: red;
+  margin: 0 0 5px;
+  del {
+    padding-right: 5px;
+    color: #999;
+  }
+}
+.sale{
+  margin: 0;
+  font-size: 12px;
+  color: #999;
 }
 </style>
