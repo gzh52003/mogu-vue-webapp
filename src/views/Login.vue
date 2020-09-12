@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import crypto from "crypto";
+// import crypto from "crypto";
 import Vue from "vue";
 import NavBar from "../components/NavBar";
 import cookies from "js-cookie";
@@ -57,7 +57,7 @@ import {
   CheckboxGroup,
   Toast,
 } from "vant";
-import { login } from "../api/login";
+// import { login } from "../api/login";
 Vue.use(Form);
 Vue.use(Field);
 Vue.use(Button);
@@ -121,8 +121,10 @@ export default {
 
       if (result.code === 0) {
         // username.className = password.className = 'form-control is-invalid';
-      } else if (result.code === 10) {
+        Notify({ type: "danger", message: "账号密码错误,请重新输入" });
+      } else if (result.code === 2) {
         // vcode.className = 'form-control is-invalid';
+        Notify({ type: "danger", message: "账号不存在,请注册" });
       } else {
         // 登录成功
         this.$router.push({ path: "/home" });

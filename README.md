@@ -1,5 +1,67 @@
-# Vue项目名称：仿蘑菇街
+# Vue项目名称：购物街
 ------------------------
+
+#### 官网: https://m.mogu.com/ 
+
+#### 上线地址:http://121.36.201.222/dist
+
+##### 测试账号:laozhao
+
+​		密码:111111
+
+#### git仓库地址:https://github.com/gzh52003/mogu-vue-webapp.git
+
+#### 团队:
+
+1. 组长:黄小明
+
+2. 成员:郭斌斌,赵永鸿,黄浩鹏(留级)
+
+3. 分工:黄小明:首页,详情页
+
+   ​		郭斌斌:接口,登录,注册
+
+   ​		赵永鸿:个人主页,
+
+   ​		黄浩鹏:购物车
+
+### 项目截图:
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/1.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/2.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/3.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/4.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/5.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/6.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/7.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/8.png )
+
+![image]( https://github.com/gzh52003/mogu-vue-webapp/blob/dev/webapp_img/9.png )
+
+### 技术栈
+
+#### 前端
+
+- Vue
+- Vue-Router
+- Vuex
+- Vue-Cli
+- axios
+- vant
+- git
+
+#### 后端
+
+- Nodejs
+- Express
+- MongoDB
 
 #### 目录结构
 ------------------------
@@ -27,3 +89,4 @@
 └── README.md        # 项目文档
 
 ```
+
