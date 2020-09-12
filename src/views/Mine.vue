@@ -13,7 +13,8 @@
       <van-image round src="https://img.yzcdn.cn/vant/cat.jpeg" />
       <div v-if="!showUser" class="notetxt">
       <span>{{username}}</span>
-      </div>
+    </div>
+    <van-button plain type="info" to="Login" size="small" class="btn">退出</van-button>
     </div>
     <van-cell title="地址管理" is-link to="dizhi" />
   </div>
@@ -79,5 +80,10 @@ export default {
   left: 30%;
   top: 50%;
   transform: translate(-50%,-50%);
+}
+.btn{
+  position: absolute;
+  right: 5px;
+  top: 20%;
 }
 </style>

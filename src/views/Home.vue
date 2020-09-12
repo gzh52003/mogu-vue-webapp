@@ -104,7 +104,6 @@ export default {
     this.getHomeList("pop");
     this.getHomeList("new");
     this.getHomeList("sell");
-    
 
     this.$parent.showNav = true
   },
@@ -125,7 +124,7 @@ export default {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page = page;
         this.title = res.data.filter.list;
-        // console.log(this.goods);
+        console.log(this.goods);
         // this.pop = this.goods[this.currentPop].list
         // this.new = this.goods[this.currentNew].list
         

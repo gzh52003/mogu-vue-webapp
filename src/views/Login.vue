@@ -26,12 +26,17 @@
         placeholder="密码"
         :rules="[{validator:password, required: true, message: '请填写6-12位密码' }]"
       />
+      <!-- <van-field v-model="ruleForm.vcode" name="vcode" label="验证码" placeholder="验证码">
+        <template #button>
+          <span v-html="Svcode" id="svg" @click="getVcode()"></span>
+        </template>
+      </van-field>-->
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit">登陆</van-button>
       </div>
       <li>
         <router-link to="Reg">没账号?去注册</router-link>
-        <van-checkbox v-model="checked" class="check">记住密码</van-checkbox>
+        <van-checkbox v-model="checked" id="mdl">7天免登录</van-checkbox>
       </li>
     </van-form>
   </div>
@@ -82,56 +87,76 @@ export default {
     phoneNumber(phone) {
       /^1[3456789]\d{9}$/.test(phone);
     },
-    onSubmit(values) {
+    async onSubmit() {
       Toast.loading({
         message: "加载中...",
         forbidClick: true,
       });
-      const self = this;
-      let md5 = crypto.createHash("md5");
-      md5.update(self.ruleForm.password); //需要加密的密码
-      let password = md5.digest("hex"); //password 加密完的密码
-
-      //判断复选框是否被勾选 勾选则调用配置cookie方法
-      if (self.checked == true) {
+      const mdl = this.checked;
+      const username = this.ruleForm.username;
+      // const password = this.ruleForm.password;
+      // const vcode = this.ruleForm.vcode;
+      // let md5 = crypto.createHash("md5");
+      // md5.update(this.ruleForm.password); //需要加密的密码
+      // let password = md5.digest("hex"); //password 加密完的密码
+      // const self = this;
+      // cookies.set("vcode", this.ruleForm.vcode, { expires: 3 });
+      // //判断复选框是否被勾选 勾选则调用配置cookie方法
+      if (this.checked == true) {
         // console.log("checked == true");
         //传入账号名，密码，和保存天数3个参数
         // self.$cookie.setCookie(self.ruleForm.username, password, 7);
-        cookies.set("username", self.ruleForm.username, { expires: 7 });
-        cookies.set("password", password, { expires: 7 });
+        cookies.set("username", this.ruleForm.username, { expires: 7 });
+        // cookies.set("password", password, { expires: 7 });
       } else {
         // console.log("清空Cookie");
         //清空Cookie
         // self.$cookie.clearCookie();
         cookies.remove("username");
-        cookies.remove("password");
+        // cookies.remove("password");
       }
+      const result = await fetch(
+        `http://121.36.201.222:2020/api/login?username=${username}&password=${this.ruleForm.password}&mdl=${mdl}`
+      ).then((res) => res.json());
 
-      // 发送登陆请求
-      login(values).then((res) => {
-        if (res.meta.status === 200) {
-          setTimeout(() => {
-            let token = res.data.token;
-            localStorage.setItem("token", token); //保存token
-            this.$router.push({ path: "/home" });
-            Notify({ type: "success", message: "登陆成功" });
-          }, 1000);
-
-          let name = cookies.get("username");
-          if (name) {
-            this.showname = true;
-            this.showUser = false;
-          } else {
-            this.showname = false;
-            this.showUser = true;
-          }
+      if (result.code === 0) {
+        // username.className = password.className = 'form-control is-invalid';
+      } else if (result.code === 10) {
+        // vcode.className = 'form-control is-invalid';
+      } else {
+        // 登录成功
+        this.$router.push({ path: "/home" });
+        localStorage.setItem("currentUser", JSON.stringify(result.data));
+        Notify({ type: "success", message: "登陆成功" });
+        // location.href = 'manage/index.html'
+        let name = cookies.get("username");
+        if (name) {
+          this.showname = true;
+          this.showUser = false;
         } else {
-          Notify({ type: "danger", message: "登陆失败" });
+          this.showname = false;
+          this.showUser = true;
         }
-      });
+      }
     },
+
+    // 获取图形验证码
+
+    //   async getVcode() {
+    //     const result = await fetch(
+    //       "http://121.36.201.222:2020/api/vcode?"
+    //     ).then((res) => res.json());
+
+    //     if (result.code == 1) {
+    //       this.Svcode = result.data;
+    //       // console.log(result);
+    //       cookies.set("vcode", this.Svcode, { expires: 7 });
+    //     }
+    //   },
   },
-  created() {},
+  created() {
+    // this.getVcode();
+  },
   components: {
     NavBar,
   },
@@ -163,7 +188,7 @@ li {
   list-style: none;
   padding-left: 10px;
 }
-.check {
+#mdl {
   padding-right: 10px;
 }
 </style>

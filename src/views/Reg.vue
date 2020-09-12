@@ -15,6 +15,7 @@
         label="用户名"
         placeholder="用户名"
         :rules="[{ required: true, message: '请填写用户名' }]"
+        @change="myChange"
       />
       <van-field
         v-model="ruleForm.password"
@@ -92,19 +93,45 @@ export default {
       return /^1[3456789]\d{9}$/.test(mobile);
     },
     email(email) {
-      return /^([a-zA-Z]|[0-9])(\w)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(email);
+      return /^([a-zA-Z]|[0-9])(\w)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(
+        email
+      );
     },
     onSubmit(values) {
       regUser(values).then((res) => {
-        if (res.meta.status === 201) {
+        // console.log(res);
+        // console.log(res);
+        if (res.data.code === 1) {
           Notify({ type: "success", message: "注册成功" });
           this.$router.push({ path: "/login" });
-        } else if (res.meta.status === 400) {
-          Notify({ type: "danger", message: "用户已存在,请重新注册" });
         }
       });
     },
+    async myChange() {
+      const result =await fetch(
+        `http://121.36.201.222:2020/api/reg/check?username=${this.ruleForm.username}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => res.json());
+
+      console.log("result=", result);
+
+      if (result.code === 1) {
+        // username.className = "form-control is-invalid";
+        // canReg = false;
+        Notify({ type: "warning", message: "用户已存在" });
+        
+      } else if (result.code === 0) {
+        // username.className = "form-control is-valid";
+        // canReg = true;
+        Notify({ type: "success", message: "该用户名可用" });
+      }
+    },
   },
+
   components: {
     NavBar,
   },
@@ -121,7 +148,7 @@ export default {
   align-items: center;
   padding: 20px 120px;
 }
-.txt >img {
+.txt > img {
   width: 80px;
   height: 80px;
 }
