@@ -26,8 +26,8 @@
         </p>
         <p class="order__title__navigate">
           <span>
-            <router-link to="orderList">全部订单</router-link>
-            </span>
+            <router-link class="ding" to="orderList">全部订单</router-link>
+          </span>
         </p>
       </h3>
       <div class="order__bd">
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="user-tools">
-      <van-cell title="地址管理" is-link to="address" />
+      <van-cell title="地址管理" is-link to="addressa" />
       <van-cell title="我的优惠券" is-link to="coupon" />
       <van-cell title="余额充值" is-link />
       <van-cell title="设置" is-link />
@@ -199,5 +199,8 @@ export default {
 .order__title__navigate > span {
   display: flex;
   align-items: center;
+}
+.ding {
+  color: black;
 }
 </style>

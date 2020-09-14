@@ -1,7 +1,12 @@
 <template>
   <div>
-    <van-nav-bar title="新增地址" left-text="返回" left-arrow @click-left="onClickLeft" />
+    <NavBar>
+      <span slot="left" class="van-nav-bar__text" @click="onClickLeft">返回</span>
+      <div slot="title">编辑地址</div>
+      <van-icon name="search" slot="right" size="18" />
+    </NavBar>
     <van-address-edit
+      :address-info="addressInfo"
       :area-list="areaList"
       show-postal
       show-delete
@@ -18,8 +23,10 @@
 
 <script>
 import Vue from "vue";
+import NavBar from "../components/NavBar";
 import areaList from "../assets/js/area.js";
 import { AddressEdit, Area, Toast } from "vant";
+import { mapGetters } from "vuex";
 Vue.use(AddressEdit);
 Vue.use(Area);
 
@@ -29,23 +36,23 @@ export default {
     return {
       areaList,
       searchResult: [],
-      AddressInfo: {
-        //收货人信息初始值
-        name: "", //姓名
-        tel: "", //电话
-        province: "", //省份
-        city: "", //城市
-        country: "", //区县
-        areaCode: "", //地址code：ID
-        addressDetail: "", //详细地址
-        isDefault: true, //是否选择默认
-      },
+      addressInfo: {},
     };
   },
-
+  computed: {
+    ...mapGetters(["address"]),
+  },
+  mounted() {
+    const { index } = this.$route.query;
+    console.log(this.$router.query);
+    this.addressInfo = this.addressa[Number(index)];
+  },
+  components: {
+    NavBar,
+  },
   methods: {
     onClickLeft() {
-      this.$router.push("/address");
+      this.$router.push("/addressa");
     },
     onSave(e) {
       console.log(e);
@@ -60,23 +67,19 @@ export default {
       data.isDefault = e.isDefault;
 
       console.log(data);
-      let addressData = JSON.parse(localStorage.getItem("address")) || [];
+      let addressData = JSON.parse(localStorage.getItem("addressa")) || [];
       addressData.push(data);
-      localStorage.setItem("address", JSON.stringify(addressData));
-      this.$router.push("/address");
+      localStorage.setItem("addressa", JSON.stringify(addressData));
+      this.$router.push("/addressa");
     },
-    onDelete() {
+    onDelete(value) {
       Toast("delete");
-      this.$router.push("/address");
+      // this.$router.push("/addressa");
+      console.log("删除地址", value);
     },
     onChangeDetail(val) {
       if (val) {
-        this.searchResult = [
-          {
-            name: "万达广场",
-            address: "郑州市二七区",
-          },
-        ];
+        this.searchResult = [];
       } else {
         this.searchResult = [];
       }

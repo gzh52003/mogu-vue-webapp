@@ -31,9 +31,9 @@ const routes = [
     component: () => import('../views/Mine.vue')
   },
   {
-    path: '/address',
-    name: 'address',
-    component: () => import('../views/address.vue')
+    path: '/addressa',
+    name: 'addressa',
+    component: () => import('../views/addressa.vue')
   },
   {
     path: '/addressEdit',
