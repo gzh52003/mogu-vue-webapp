@@ -17,7 +17,7 @@
       @click-thumb.stop="gotoDetail(item.iid,$event)"
     >
       <template #footer>
-        <van-button size="mini" color="red">取消订单</van-button>
+        <van-button size="mini" color="red" @click="remove(item.iid)">取消订单</van-button>
       </template>
     </van-card>
   </div>
@@ -26,9 +26,10 @@
 <script>
 import NavBar from "../components/NavBar";
 import Vue from "vue";
-import { Card } from "vant";
+import { Card, Dialog } from "vant";
 import { mapState } from "vuex";
 Vue.use(Card);
+Vue.use(Dialog);
 
 export default {
   data() {
@@ -39,7 +40,7 @@ export default {
     ...mapState({
       orderlist(state) {
         const res = state.cart.orderlist;
-        console.log("res=", res);
+        // console.log("res=", res);
         return res;
       },
     }),
@@ -49,13 +50,51 @@ export default {
   },
   created() {
     console.log(this.orderlist, 222);
-    console.log(this.orderList.oldPrice);
   },
   methods: {
     onClickLeft() {
       this.$router.push({
         name: "Mine",
       });
+    },
+
+    Dialog() {
+      this.$dialog
+        .confirm({
+          message: "您确定要取消订单嘛？",
+          confirmButtonColor: "red",
+        })
+        .then(() => {
+          console.log("点击了确认");
+          console.log(this.orderlist);
+          console.log(this.orderList[0].iid);
+          console.log(this.item.iid);
+        })
+        .catch(() => {
+          console.log("点击了取消");
+        });
+    },
+    gotoDetail(id, event) {
+      console.log("event.target=", event.target);
+      console.log(event.target.className);
+      if (event.target.className === "van-icon van-icon-success") {
+        return;
+      }
+      this.$router.push("/goods/" + id);
+    },
+    remove(id) {
+      this.$dialog
+        .confirm({
+          message: "您确定要取消订单嘛？",
+          confirmButtonColor: "red",
+        })
+        .then(() => {
+          console.log("点击了确认");
+          console.log(id);
+        })
+        .catch(() => {
+          console.log("点击了取消");
+        });
     },
   },
 

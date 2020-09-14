@@ -151,7 +151,9 @@ export default {
     }),
     checkAll: {
       get() {
-        return (this.goodslist.length && this.goodslist.every((item) => item.checked));
+        return (
+          this.goodslist.length && this.goodslist.every((item) => item.checked)
+        );
       },
       set(val) {
         this.goodslist.forEach((item) => {
