@@ -3,7 +3,6 @@
     <NavBar>
       <span slot="left" class="van-nav-bar__text" @click="onClickLeft">返回</span>
       <div slot="title">我的订单</div>
-      <van-icon name="search" slot="right" size="18" />
     </NavBar>
 
     <van-card
@@ -58,7 +57,7 @@ export default {
       });
     },
 
-    Dialog() {
+    Dialog(id) {
       this.$dialog
         .confirm({
           message: "您确定要取消订单嘛？",
@@ -66,6 +65,7 @@ export default {
         })
         .then(() => {
           console.log("点击了确认");
+          this.people.splice(id, 1);
           console.log(this.orderlist);
           console.log(this.orderList[0].iid);
           console.log(this.item.iid);
@@ -91,6 +91,8 @@ export default {
         .then(() => {
           console.log("点击了确认");
           console.log(id);
+          this.orderList.splice(id, 1);
+          console.log(this.orderList);
         })
         .catch(() => {
           console.log("点击了取消");

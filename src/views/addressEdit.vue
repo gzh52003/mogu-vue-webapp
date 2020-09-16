@@ -3,14 +3,12 @@
     <NavBar>
       <span slot="left" class="van-nav-bar__text" @click="onClickLeft">返回</span>
       <div slot="title">编辑地址</div>
-      <van-icon name="search" slot="right" size="18" />
     </NavBar>
     <van-address-edit
       :address-info="addressInfo"
       :area-list="areaList"
       show-postal
       show-delete
-      show-set-default
       show-search-result
       :search-result="searchResult"
       :area-columns-placeholder="['请选择', '请选择', '请选择']"
@@ -42,32 +40,46 @@ export default {
   computed: {
     ...mapGetters(["address"]),
   },
+  // created() {
+  // this.addressInfo = JSON.parse(localStorage.getItem("addressEdit"));
+  // console.log(localStorage.getItem("addressEdit"));
+  // console.log(this.addressInfo, 4);
+  // console.log(this.addressInfo, 50);
+  // },
   mounted() {
     const { index } = this.$route.query;
     console.log(this.$router.query);
     this.addressInfo = this.addressa[Number(index)];
+    console.log(this.addressInfo);
   },
   components: {
     NavBar,
   },
+
   methods: {
     onClickLeft() {
       this.$router.push("/addressa");
     },
-    onSave(e) {
-      console.log(e);
+    onSave(content) {
+      console.log(content);
 
       let data = {};
-      data.name = e.name;
-      data.tel = e.tel;
-      data.address = e.province + e.city + e.country + e.addressDetail + "";
-      data.addressDetail = e.addressDetail;
-      data.areaCodeL = e.areaCode;
-      data.postalCode = e.postalCode;
-      data.isDefault = e.isDefault;
+      data.name = content.name;
+      data.tel = content.tel;
+      data.address =
+        content.province +
+        content.city +
+        content.country +
+        content.addressDetail +
+        "";
+      data.addressDetail = content.addressDetail;
+      data.areaCodeL = content.areaCode;
+      data.postalCode = content.postalCode;
+      data.isDefault = content.isDefault;
 
       console.log(data);
       let addressData = JSON.parse(localStorage.getItem("addressa")) || [];
+      console.log(addressData);
       addressData.push(data);
       localStorage.setItem("addressa", JSON.stringify(addressData));
       this.$router.push("/addressa");
